@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisis Kompleksitas Algoritma</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff, #b4b5c8);
+            color: #333;
+            line-height: 1.7;
+        }
+        header {
+            background: linear-gradient(135deg, #0a0125, #373a64);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin: 8px 10px;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.15);
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(6px);
+        }
+        nav a:hover {
+            background: white;
+            color: #0d47a1;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+        }
+        nav a.active {
+            background: white;
+            color: #0d47a1;
+            box-shadow: 0 10px 22px rgba(0,0,0,0.3);
+        }
+        nav a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        section {
+            background: white;
+            padding: 35px;
+            margin-bottom: 35px;
+            border-radius: 18px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        section:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+        }
+        section h2 {
+            margin-top: 0;
+            color: #0d47a1;
+        }
+        canvas {
+            margin-top: 20px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #373a64;
+            font-size: 14px;
+            color: white;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<header>
+    <h1>Analisis Kompleksitas Algoritma</h1>
+    <p style="margin-top:10px; max-width:900px; margin-left:auto; margin-right:auto; font-size:15px; opacity:0.9;">
+        Visualisasi dan analisis perbandingan algoritma iteratif dan rekursif pada pembacaan data sensor DHT22 berbasis mikrokontroler
+    </p>
+    <nav style="margin-top:25px;">
+        <a href="#home">Home</a>
+        <a href="#iteratif">Iteratif</a>
+        <a href="#rekursif">Rekursif</a>
+        <a href="#grafik">Grafik & Tabel</a>
+    </nav>
+</header>
+
+<div class="container">
+    <section>
+        <h2>Latar Belakang</h2>
+        <p>
+            Perkembangan sistem monitoring berbasis mikrokontroler semakin pesat, khususnya pada aplikasi pemantauan suhu dan kelembapan menggunakan sensor DHT22. Sensor ini banyak digunakan karena kemudahan implementasi dan tingkat akurasi yang cukup baik. Namun, keterbatasan sumber daya komputasi pada mikrokontroler menuntut penggunaan algoritma yang efisien, baik dari sisi waktu eksekusi maupun penggunaan memori.
+        </p>
+        <p>
+            Oleh karena itu, pemilihan pendekatan algoritmik yang tepat menjadi faktor penting dalam memastikan sistem dapat berjalan secara optimal dan stabil. Analisis kompleksitas algoritma diperlukan untuk memahami dampak dari setiap pendekatan terhadap kinerja sistem secara keseluruhan.
+        </p>
+    </section>
+
+    <section>
+        <h2>Tujuan</h2>
+        <p>
+            Tugas Besar ini bertujuan untuk menganalisis dan membandingkan kompleksitas waktu dan ruang antara algoritma pembacaan data sensor suhu dan kelembapan DHT22 yang menggunakan pendekatan iteratif dan rekursif. Selain itu, penelitian ini juga bertujuan untuk mengevaluasi efisiensi masing-masing pendekatan dalam hal kecepatan eksekusi, penggunaan memori, serta kestabilan sistem selama proses pembacaan data.
+        </p>
+    </section>
+
+    <section id="iteratif">
+        <h2>Algoritma Iteratif</h2>
+        <p>
+            Pendekatan iteratif pada pembacaan data sensor DHT22 dilakukan dengan menggunakan perulangan untuk membaca dan memproses data suhu serta kelembapan secara berulang. Algoritma ini umumnya memiliki penggunaan memori yang lebih efisien karena tidak membutuhkan pemanggilan fungsi berulang.
+        </p>
+        <p>
+            Dari sisi kompleksitas waktu, algoritma iteratif cenderung lebih stabil dan mudah dianalisis, sehingga sering menjadi pilihan utama pada sistem mikrokontroler dengan keterbatasan sumber daya.
+        </p>
+    </section>
+
+    <section id="rekursif">
+        <h2>Algoritma Rekursif</h2>
+        <p>
+            Pendekatan rekursif menyelesaikan proses pembacaan dan pengolahan data sensor dengan memanggil fungsi secara berulang hingga kondisi tertentu terpenuhi. Setiap pemanggilan fungsi akan menambah penggunaan stack memori.
+        </p>
+        <p>
+            Meskipun secara konsep lebih sederhana dan elegan, algoritma rekursif berpotensi kurang efisien untuk sistem mikrokontroler karena keterbatasan memori dan risiko stack overflow.
+        </p>
+    </section>
+
+    <section id="grafik">
+        <h2>Grafik Perbandingan Running Time</h2>
+        <p>
+            Masukkan ukuran input (n) untuk melihat perbandingan running time algoritma iteratif dan rekursif. Nilai waktu bersifat simulasi untuk menggambarkan perbedaan efisiensi kedua pendekatan.
+        </p>
+
+        <div style="margin:25px 0; display:grid; grid-template-columns:1fr auto auto; gap:15px; align-items:center;">
+            <input type="number" id="inputN" placeholder="Masukkan ukuran input n (contoh: 1000)" style="padding:14px; border-radius:12px; border:1px solid #ccc; font-size:14px;">
+            <button id="btnTambah" style="padding:14px 22px; border:none; border-radius:12px; background:linear-gradient(135deg,#1976d2,#42a5f5); color:white; font-weight:bold; cursor:pointer; transition:0.3s;">Tambah Data</button>
+            <button id="btnReset" style="padding:14px 22px; border:none; border-radius:12px; background:linear-gradient(135deg,#c62828,#ef5350); color:white; font-weight:bold; cursor:pointer; transition:0.3s;">Reset</button>
+        </div>
+
+        <canvas id="runtimeChart" height="100"></canvas>
+
+        <h3 style="margin-top:30px; text-align:center;">Tabel Perbandingan Running Time</h3>
+        <table id="tabelPerbandingan" style="width:100%; border-collapse:collapse; margin-top:20px; overflow:hidden; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.1);">
+            <thead>
+                <tr style="background:linear-gradient(135deg,#1565c0,#1e88e5); color:white;">
+                    <th style="padding:12px;">Ukuran Input (n)</th>
+                    <th style="padding:12px;">Waktu Iteratif (ms)</th>
+                    <th style="padding:12px;">Status Iteratif</th>
+                    <th style="padding:12px;">Waktu Rekursif (ms)</th>
+                    <th style="padding:12px;">Status Rekursif</th>
+                </tr>
+            </thead>
+            <tbody style="text-align:center; background:#fafafa;"></tbody>
+        </table>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // animasi scroll halus
+                document.querySelectorAll('nav a').forEach(link => {
+                    link.addEventListener('click', e => {
+                        e.preventDefault();
+                        document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+                        link.classList.add('active');
+                        document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                    });
+                });
+                    });
+
+                // batas kapasitas simulasi
+                const MAX_ITERATIF = 15000;
+                const MAX_REKURSIF = 5000;
+
+                function waktuIteratif(n) {
+                    if (n > MAX_ITERATIF) return null;
+                    return n * 0.02;
+                }
+
+                function waktuRekursif(n) {
+                    if (n > MAX_REKURSIF) return null;
+                    return n * 0.04 + Math.log2(n) * 5;
+                }
+
+                const ctx = document.getElementById('runtimeChart').getContext('2d');
+                const runtimeChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: [],
+                        datasets: [
+                            {
+                                label: 'Algoritma Iteratif',
+                                data: [],
+                                borderWidth: 3,
+                                pointRadius: 5,
+                                pointHoverRadius: 7,
+                                tension: 0.3,
+                                fill: false
+                            },
+                            {
+                                label: 'Algoritma Rekursif',
+                                data: [],
+                                borderWidth: 3,
+                                pointRadius: 5,
+                                pointHoverRadius: 7,
+                                tension: 0.3,
+                                fill: false
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        interaction: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    font: { size: 13, weight: 'bold' }
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Visualisasi Perbandingan Running Time Algoritma Iteratif vs Rekursif',
+                                font: { size: 16, weight: 'bold' }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.dataset.label}: ${context.parsed.y ?? 'Gagal'} ms`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Ukuran Input (n)',
+                                    font: { weight: 'bold' }
+                                },
+                                grid: { display: false }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Waktu Eksekusi (ms)',
+                                    font: { weight: 'bold' }
+                                },
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+                let tbody = document.querySelector('#tabelPerbandingan tbody');
+
+                document.getElementById('btnTambah').addEventListener('click', () => {
+                    const n = parseInt(document.getElementById('inputN').value);
+                    if (isNaN(n) || n <= 0) return;
+
+                    const tIter = waktuIteratif(n);
+                    const tRek = waktuRekursif(n);
+
+                    const statusIter = tIter === null ? 'Gagal' : 'Berhasil';
+                    const statusRek = tRek === null ? 'Gagal' : 'Berhasil';
+
+                    runtimeChart.data.labels.push(n);
+                    runtimeChart.data.datasets[0].data.push(tIter);
+                    runtimeChart.data.datasets[1].data.push(tRek);
+                    runtimeChart.update();
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td style="padding:10px;">${n}</td>
+                        <td style="padding:10px;">${tIter !== null ? tIter.toFixed(2) : '-'}</td>
+                        <td style="padding:10px; font-weight:bold; color:${statusIter === 'Gagal' ? '#c62828' : '#2e7d32'}">${statusIter}</td>
+                        <td style="padding:10px;">${tRek !== null ? tRek.toFixed(2) : '-'}</td>
+                        <td style="padding:10px; font-weight:bold; color:${statusRek === 'Gagal' ? '#c62828' : '#2e7d32'}">${statusRek}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+
+                document.getElementById('btnReset').addEventListener('click', () => {
+                    runtimeChart.data.labels = [];
+                    runtimeChart.data.datasets.forEach(ds => ds.data = []);
+                    runtimeChart.update();
+                    tbody.innerHTML = '';
+                });
+        </script>
+    </section>
+</div>
+
+<footer>
+    <p>Tugas Besar Analisis Kompleksitas Algoritma &copy; 2025/2026</p>
+</footer>
+
+</body>
+</html>
